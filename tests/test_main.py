@@ -36,7 +36,7 @@ def test_triage_returns_triage_out_offline() -> None:
     assert response.status_code == 200
     body = response.json()
     assert REQUIRED_TOP_LEVEL <= set(body.keys())
-    assert body["refund"]["reason_code"] == "refund_gate_pending"
+    assert body["refund"]["reason_code"] == "policy_review_required"
 
 
 def test_triage_same_input_same_output() -> None:
