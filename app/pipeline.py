@@ -1,3 +1,4 @@
+from app.refund_gate import decide_refund
 from pydantic import ValidationError
 
 from app.config import get_extraction_max_retries
@@ -15,12 +16,6 @@ from app.schemas import (
     TriageOut,
 )
 
-REFUND_GATE_PENDING = RefundDecision(
-    action=RefundAction.UNDETERMINED,
-    amount_inr=None,
-    reason_code="refund_gate_pending",
-    reason_summary="Refund eligibility is decided by the policy gate (not implemented yet).",
-)
 
 
 def _degraded_extraction() -> LLMExtraction:
@@ -62,11 +57,19 @@ def run_triage(
 ) -> TriageOut:
     model = provider or get_model_provider()
     extraction = extract_llm_output(ticket, model)
+
+    refund = decide_refund(ticket)
+
+    needs_human = (
+        extraction.needs_human
+        or refund.action is RefundAction.UNDETERMINED
+    )
+
     return TriageOut(
         category=extraction.category,
         severity=extraction.severity,
-        refund=REFUND_GATE_PENDING,
+        refund=refund,
         reply_draft=extraction.reply_draft,
-        needs_human=extraction.needs_human,
+        needs_human=needs_human,
         confidence=extraction.confidence,
     )
