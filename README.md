@@ -107,6 +107,8 @@ The fixture/replay provider is intended to let the evaluator run the service wit
 pytest -q
 ```
 
+The test suite passed in the latest local run.
+
 ### 6. Try the endpoint
 
 Send a `POST` request to:
@@ -243,7 +245,7 @@ These results demonstrate the behaviour of the supplied fixture run. They do not
 
 ### Dashboard metric
 
-**Human-review rate: 9 out of 12 tickets (75%)** in this fixture run.
+**Human-review rate: 10 out of 12 tickets (83.3%)** in this fixture run.
 
 This is a useful metric to monitor over time. A sudden change could indicate a change in ticket mix or triage behaviour. It should not be treated as a metric to minimise at all costs, since human review is necessary for ambiguous and high-risk cases.
 
@@ -390,7 +392,8 @@ I focused on keeping refund authorisation separate from the model's triage outpu
 * The refund gate uses phrase-based matching and can miss requests expressed in unfamiliar ways.
 * The prompt-injection handling is targeted and is not a comprehensive defence against all adversarial input.
 * Production queueing, durable storage, observability, and high-throughput handling are design proposals rather than implemented features.
-* Idempotency and sensitive-data logging should be verified against the final implementation before relying on them in production.
+* The service caches triage results by ticket ID. Simultaneous requests may both execute the triage pipeline, although only one result is stored. The current service does not execute refunds; any future payment integration must implement its own payment-level idempotency.
+* Sensitive-data logging and production database behaviour should be reviewed before deployment.
 
 ## Submission
 
