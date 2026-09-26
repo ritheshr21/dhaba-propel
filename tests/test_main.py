@@ -9,6 +9,16 @@ from app.main import app
 TICKETS_PATH = Path(__file__).resolve().parent.parent / "dhaba_tickets.json"
 client = TestClient(app)
 
+@pytest.fixture(autouse=True)
+def isolate_test_database(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setenv(
+        "TRIAGE_DB_PATH",
+        str(tmp_path / "triage.sqlite3"),
+    )
+
 REQUIRED_TOP_LEVEL = {
     "category",
     "severity",
