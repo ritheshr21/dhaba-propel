@@ -1,0 +1,11 @@
+{
+  "category": "feature_request",
+  "severity": "low",
+  "reply_draft": "Thanks for the suggestion—we have noted Marathi language support. Glad you are enjoying the app otherwise.",
+  "needs_human": false,
+  "confidence": {
+    "score": 0.9,
+    "band": "high",
+    "on_low": "Log feature request; no urgent action."
+  }
+}

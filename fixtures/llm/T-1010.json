@@ -1,0 +1,11 @@
+{
+  "category": "invoice",
+  "severity": "medium",
+  "reply_draft": "We can issue a GST invoice for your annual payment. Please confirm billing name and GSTIN in your reply and we will send the document.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.88,
+    "band": "high",
+    "on_low": "Invoice requests handled by billing ops."
+  }
+}

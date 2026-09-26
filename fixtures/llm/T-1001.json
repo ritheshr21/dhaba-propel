@@ -1,0 +1,11 @@
+{
+  "category": "billing",
+  "severity": "high",
+  "reply_draft": "We understand you expected only the ₹1 trial charge. After the trial, the monthly plan can renew automatically. We are reviewing your billing timeline and will explain the charge and next steps.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.72,
+    "band": "medium",
+    "on_low": "Escalate billing disputes to a human agent."
+  }
+}

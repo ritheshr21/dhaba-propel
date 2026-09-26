@@ -1,0 +1,11 @@
+{
+  "category": "billing",
+  "severity": "high",
+  "reply_draft": "You expected autopay to be off before the annual renewal. We will check renewal timing and UPI mandate status, then explain options regarding the recent ₹1,499 charge.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.7,
+    "band": "medium",
+    "on_low": "Annual renewal disputes need human billing review."
+  }
+}

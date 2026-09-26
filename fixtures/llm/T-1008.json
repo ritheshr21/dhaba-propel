@@ -1,0 +1,11 @@
+{
+  "category": "abuse_or_fraud",
+  "severity": "critical",
+  "reply_draft": "We take unauthorized charges seriously. We will review the three payments on this account and respond today with what we find and next steps.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.75,
+    "band": "medium",
+    "on_low": "Fraud claims always go to a human specialist."
+  }
+}

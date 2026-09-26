@@ -1,0 +1,11 @@
+{
+  "category": "technical",
+  "severity": "high",
+  "reply_draft": "Sorry the app is closing on launch after the update. Please try clearing app cache and updating Android System WebView. Share your device model and we will track the crash.",
+  "needs_human": false,
+  "confidence": {
+    "score": 0.85,
+    "band": "high",
+    "on_low": "Escalate to engineering if crash persists."
+  }
+}
