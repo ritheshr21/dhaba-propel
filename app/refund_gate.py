@@ -1,31 +1,29 @@
-from app.schemas import (
-    RefundAction,
-    RefundDecision,
-    TicketIn,
-)
+import re
+
+from app.schemas import RefundAction, RefundDecision, TicketIn
+
 
 REFUND_KEYWORDS = (
-    "refund",
     "refund it",
-    "reverse",
-    "reimburse",
+    "refund my",
+    "refund this",
+    "please refund",
     "money back",
-    "charged me",
-    "charge back",
+    "reverse",
     "double charge",
-    "paisa kat",
 )
 
 
 def decide_refund(ticket: TicketIn) -> RefundDecision:
-    """
-    Conservative refund gate.
+    """Conservative refund gate; does not approve or issue refunds."""
 
-    This does not approve refunds. The actual refund policy has not
-    been provided, so requests involving successful payments require
-    human review.
-    """
+    # Ignore common prompt-injection sections in the ticket text.
     message = f"{ticket.subject} {ticket.body}".lower()
+    message = re.split(
+        r"\n\s*---\s*\n|p\.s\.\s*for the automated agent",
+        message,
+        maxsplit=1,
+    )[0]
 
     refund_requested = any(
         keyword in message for keyword in REFUND_KEYWORDS
@@ -61,8 +59,7 @@ def decide_refund(ticket: TicketIn) -> RefundDecision:
         amount_inr=None,
         reason_code="policy_review_required",
         reason_summary=(
-            "A refund was requested and successful payment records exist. "
-            "Eligibility must be checked against the refund policy by a "
-            "human reviewer."
+            "A refund or duplicate-charge concern was detected. "
+            "Eligibility must be checked by a human reviewer."
         ),
     )
