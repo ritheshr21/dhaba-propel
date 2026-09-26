@@ -1,0 +1,11 @@
+{
+  "category": "technical",
+  "severity": "medium",
+  "reply_draft": "Sorry the app has not worked well for you. Tell us what fails (crash, login, payment screen) so we can troubleshoot; we will also review your recent subscription.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.5,
+    "band": "low",
+    "on_low": "Vague complaint plus refund demand—human should investigate."
+  }
+}

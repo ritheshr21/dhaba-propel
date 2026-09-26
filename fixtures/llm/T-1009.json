@@ -1,0 +1,11 @@
+{
+  "category": "billing",
+  "severity": "high",
+  "reply_draft": "We will check for duplicate ₹249 charges on the same day and reconcile failed vs successful payment attempts in our records.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.8,
+    "band": "high",
+    "on_low": "Verify ledger before replying about double charge."
+  }
+}

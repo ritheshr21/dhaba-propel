@@ -1,0 +1,11 @@
+{
+  "category": "other",
+  "severity": "low",
+  "reply_draft": "Premium offline access depends on the feature: downloaded content can work offline after sync. Tell us what you plan to use and we can confirm before you subscribe.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.6,
+    "band": "medium",
+    "on_low": "Pre-sales and policy questions go to a human when unsure."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "category": "account",
+  "severity": "medium",
+  "reply_draft": "We can help restore order history after a device change when you are signed in with the same Google account. We will verify your account and sync purchases—this may take a short while.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.55,
+    "band": "medium",
+    "on_low": "Route account recovery and any billing requests to a human."
+  }
+}

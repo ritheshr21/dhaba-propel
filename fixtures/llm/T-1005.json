@@ -1,0 +1,11 @@
+{
+  "category": "billing",
+  "severity": "high",
+  "reply_draft": "Paisa kat gaya lekin plan activate nahi dikha—yeh frustrating hai. Hum payment status check karenge aur app mein subscription sync karne mein madad karenge. Screenshot bhej sakte ho to aur fast ho jayega.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.68,
+    "band": "medium",
+    "on_low": "Payment initiated but not successful in billing—human review."
+  }
+}

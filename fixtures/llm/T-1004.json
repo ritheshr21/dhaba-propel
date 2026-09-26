@@ -1,0 +1,11 @@
+{
+  "category": "cancellation",
+  "severity": "medium",
+  "reply_draft": "We received your cancellation request. We will confirm whether you mean cancel trial auto-renewal or stop a plan, and send steps for your account.",
+  "needs_human": true,
+  "confidence": {
+    "score": 0.4,
+    "band": "low",
+    "on_low": "Short message—human should clarify intent before acting."
+  }
+}

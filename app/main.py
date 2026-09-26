@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException
 
-from app.schemas import TicketIn
+from app.pipeline import run_triage
+from app.schemas import TicketIn, TriageOut
 
-app = FastAPI(title="Dhaba Triage", version="0.1.0")
+app = FastAPI(title="Dhaba Triage", version="0.2.0")
 
 
 @app.get("/health")
@@ -10,10 +11,13 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/triage")
-def triage(_ticket: TicketIn) -> None:
-    """Validate ticket shape; triage pipeline not implemented until later stages."""
-    raise HTTPException(
-        status_code=501,
-        detail="Triage pipeline not implemented yet.",
-    )
+@app.post("/triage", response_model=TriageOut)
+def triage(ticket: TicketIn) -> TriageOut:
+    try:
+        return run_triage(ticket)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except NotImplementedError as exc:
+        raise HTTPException(status_code=501, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
