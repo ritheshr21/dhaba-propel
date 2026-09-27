@@ -17,6 +17,8 @@ A small FastAPI service that triages customer support tickets for Dhaba, a ficti
 * FastAPI
 * Pydantic
 * Pytest
+* Google Gen AI SDK (optional live mode)
+* python-dotenv
 
 ## Project Structure
 
@@ -99,7 +101,26 @@ FastAPI's interactive API documentation is available at:
 http://127.0.0.1:8000/docs
 ```
 
-The fixture/replay provider is intended to let the evaluator run the service without a paid API key.
+Replay mode is the default evaluation path and runs without an API key or external model calls.
+
+### Optional: Run with Gemini
+
+The service also supports an optional live provider using Google's Gemini API. To enable it:
+
+1. Create a `.env` file in the project root.
+2. Add your Gemini API key and a supported model name:
+
+   ```env
+   DHABA_LLM_MODE=live
+   GEMINI_API_KEY=your_gemini_api_key
+   GEMINI_MODEL=your_supported_gemini_model
+   ```
+
+3. Start the service as described above and submit a ticket to `POST /triage`.
+
+To return to the offline fixture provider, set `DHABA_LLM_MODE=replay` in `.env`.
+
+Keep your API key private. Do not commit `.env` to version control. Live mode requires a valid API key, an available model, and network access. Replay mode remains available for deterministic local testing and evaluation.
 
 ### 5. Run the tests
 
@@ -166,11 +187,14 @@ An `undetermined` result means the case needs further review; it does not author
 
 The refund gate uses a phrase-based heuristic. It is deliberately conservative, but it is not a complete natural-language understanding system and may miss refund requests phrased in ways its keyword list does not cover.
 
-### Fixture mode
+### Replay and live modes
 
-Fixture mode uses saved responses so the evaluator can run the service without making external model calls or spending API tokens.
+The service supports two provider modes:
 
-The live provider is currently a placeholder, not a completed live-model integration. The offline fixture path is the intended evaluation path.
+* **Replay mode:** Uses saved fixture responses for deterministic, repeatable testing. It does not make external model calls and does not require an API key. This is the default and intended evaluation path.
+* **Live mode:** Uses Google's Gemini API to classify tickets and draft replies. The Gemini model and API key are configured through environment variables.
+
+In both modes, refund decisions remain separate from model-generated triage and are handled by the application's deterministic refund gate. The live provider supplies model extraction; it does not independently approve refunds.
 
 ## Task 2 — Make It Not Lie
 
@@ -388,15 +412,11 @@ I focused on keeping refund authorisation separate from the model's triage outpu
 
 ## Limitations and Future Improvements
 
-* The live model provider is a placeholder; the current evaluation path uses fixtures.
+* The optional Gemini live provider depends on an available model, a valid API key, network access, and the provider's service availability. Replay mode remains the reliable offline evaluation path.
 * The refund gate uses phrase-based matching and can miss requests expressed in unfamiliar ways.
 * The prompt-injection handling is targeted and is not a comprehensive defence against all adversarial input.
 * Production queueing, durable storage, observability, and high-throughput handling are design proposals rather than implemented features.
 * The service caches triage results by ticket ID. Simultaneous requests may both execute the triage pipeline, although only one result is stored. The current service does not execute refunds; any future payment integration must implement its own payment-level idempotency.
 * Sensitive-data logging and production database behaviour should be reviewed before deployment.
 
-## Submission
 
-This repository contains the take-home service and its implementation notes. The assignment is confidential, so the repository should only be shared using the access method specified by Propel.
-
-To submit, reply to the original email thread with the GitHub repository link. If the repository is private, invite `propel-hiring` as requested.
