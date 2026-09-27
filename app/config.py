@@ -2,6 +2,9 @@ import os
 from enum import Enum
 from functools import lru_cache
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_FIXTURES_DIR = PROJECT_ROOT / "fixtures" / "llm"
