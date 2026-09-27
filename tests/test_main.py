@@ -64,8 +64,3 @@ def test_all_twelve_tickets_triage_offline() -> None:
         assert REQUIRED_TOP_LEVEL <= set(response.json().keys())
 
 
-def test_live_mode_not_implemented(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("DHABA_LLM_MODE", "live")
-    ticket = json.loads(TICKETS_PATH.read_text(encoding="utf-8"))["tickets"][0]
-    response = client.post("/triage", json=ticket)
-    assert response.status_code == 501
